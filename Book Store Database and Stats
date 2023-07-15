@@ -1,0 +1,30 @@
+--Create Books Store Database
+
+--Create Table
+CREATE TABLE books (id integer primary key, name text, author text, rating real, price integer);
+
+--Insert Data
+INSERT INTO books VALUES
+(1, "Greg", "book1", 2000, 4.98),
+(2, "Lisa", "book2", 2020, 5.23),
+(3, "Bob", "book3", 2010, 3.99),
+(4, "Chris", "book4", 1995, 10.99),
+(5, "George", "book5", 1990, 30.89),
+(6, "Ashley", "book6", 2013, 5.50),
+(7, "Morgan", "book7", 2021, 14.50),
+(8, "John", "book8", 1998, 4.99),
+(9, "Alex", "book9", 2005, 30.99),
+(10, "Allison", "book10", 2015, 20.99),
+(11, "Justin", "book11", 2013, 5.50),
+(12, "Ron", "book12", 2001, 15.55),
+(13, "Mark", "book13", 2021, 14.50),
+(14, "Joe", "book14", 1998, 4.99),
+(15, "Leah", "book15", 2005, 30.99);
+
+--Order Books by Price (Most to Least Expensive)
+select * from books order by price desc;
+
+--Get the Average Costs of all the Books in the Store
+select avg(price) from books;
+
+
