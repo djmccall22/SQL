@@ -1,0 +1,44 @@
+--Create Artists Table
+CREATE table artists (id integer primary key, name text, genre text, song_id integer);
+
+--Insert Artists Table Data
+INSERT INTO artists (name, genre, song_id) VALUES
+("John Legend", "R&B", 1),
+("Lil Wayne", "Hip Hop", 2),
+("Morgan Walllen", "Country", 3),
+("The Beatles", "Rock", 4),
+("Chris Tomlin", "Christian", 5),
+("Drake", NULL, 6);
+
+-- Create Songs Table
+CREATE TABLE songs (id integer primary key, song_name text, released_year integer, artists_id integer);
+
+
+--Insert Songs Table Data
+INSERT INTO songs (song_name, released_year, artists_id) VALUES
+("All of Me", 2013, 1),
+("Love Me Now", 2016, 1),
+("Fireman", 2002, 2),
+("Lollipop", 2010, 2),
+("Broadway Girls", 2022, 3),
+("Heartless", 2021, 3),
+("Let It Be", 1970, 4),
+("Hey Jude", 1968, 4),
+("10,000 Reasons", 2005, 5),
+("Thank You Lord", 2020, 5),
+("Headlines", 2010, 6),
+("Views", 2014, 6);
+
+
+--What Songs does Lil Wayne Sing?
+
+select songs.song_name
+from artists JOIN songs
+on artists.id = songs.artists_id
+where artists.name = "Lil Wayne";
+
+--List the Artist and Songs that don't have a genre
+select artists.name, songs.song_name
+from artists JOIN songs
+on artists.id = songs.artists_id
+where genre IS NULL
