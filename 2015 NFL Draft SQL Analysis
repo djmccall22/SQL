@@ -1,6 +1,8 @@
 -- 1st 3 rounds of the NFL 2015 Draft Data Analysis
     --Collected by: https://www.khanacademy.org/profile/BobbyandKaren
 
+--Execute Code: http://sqlfiddle.com/#!17/7dae0/7006
+
 --Create Table 
 CREATE TABLE picks(
 	id INTEGER PRIMARY KEY,
