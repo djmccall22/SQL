@@ -1,0 +1,91 @@
+--What columns are in the customers table?
+select * from customers;
+    --ANSWER: order_id, acctnum
+
+--What columns are in the JanSales table?
+
+select * from JanSales;
+
+    --ANSWER: orderID, Product, Quantity, price, orderdate, location
+
+--What column(s) do the customers table and the JanSales table have in common?
+    --ANSWER: order_ID and OrderID
+    
+SELECT * FROM BIT_DB.customers;
+
+--How many orders were placed in January? Remember to filter out the blank and incorrect order IDs like we did in the "dealing with messy data" section of the previous lesson!
+
+select count(*) from JanSales
+where length(orderid) = 6
+and orderid <> 'Order ID';
+
+    --ANSWER: 9,681 Orders
+
+--How many of those orders were for an iPhone?
+
+select count(*) from JanSales
+where length(orderid) = 6
+and orderid <> 'Order ID'
+and Product = 'iPhone';
+
+    --ANSWER: 379 Orders
+
+
+--Select the customer account numbers for all the orders that were placed in February.
+
+select customers.acctnum
+from FebSales
+    join customers
+        ON FebSales.orderID = customers.order_id
+where FebSales.orderdate < '03/01/19';
+
+--Which product was the cheapest one sold in January, and what was the price?
+
+select product, price from JanSales
+where length(orderid) = 6
+and orderid <> 'Order ID'
+order by price asc
+limit 1;
+
+    --ANSWER: AAA Batteries (4-pack) $2.99
+
+
+--What is the total revenue for each product sold in January? (Revenue can be calculated using the number of products sold and the price of the products).
+
+select Product, round((sum(quantity) * price), 2) as total_revenue
+from 
+    (select * from JanSales
+    where length(orderid) = 6
+    and orderid <> 'Order ID')
+group by Product;    
+
+
+--Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+
+select Product, quantity, quantity * price as total_revenue
+from
+    (select * from FebSales where location = '548 Lincoln St, Seattle, WA 98101');
+
+
+--How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+
+select count(*) from 
+    (select acctnum, round(avg(price),2) as average_amount
+    from customers
+        JOIN (select * from JanSales
+        where length(orderid) = 6
+        and orderid <> 'Order ID') Feb
+            ON customers.order_id = Feb.orderID 
+    group by acctnum
+    having count(*) > 2);
+    
+    --ANSWER: 78 Customers
+
+select acctnum, round(avg(price),2) as average_amount
+from customers
+    JOIN (select * from JanSales
+    where length(orderid) = 6
+    and orderid <> 'Order ID') Feb
+        ON customers.order_id = Feb.orderID 
+group by acctnum
+having count(*) > 2;
