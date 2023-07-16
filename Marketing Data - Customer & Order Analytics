@@ -72,20 +72,30 @@ from
 select count(*) from 
     (select acctnum, round(avg(price),2) as average_amount
     from customers
-        JOIN (select * from JanSales
+        JOIN (select * from FebSales
         where length(orderid) = 6
         and orderid <> 'Order ID') Feb
             ON customers.order_id = Feb.orderID 
     group by acctnum
     having count(*) > 2);
     
-    --ANSWER: 78 Customers
+    --ANSWER: 80 Customers
 
 select acctnum, round(avg(price),2) as average_amount
 from customers
-    JOIN (select * from JanSales
+    JOIN (select * from FebSales
     where length(orderid) = 6
     and orderid <> 'Order ID') Feb
         ON customers.order_id = Feb.orderID 
 group by acctnum
 having count(*) > 2;
+
+
+--List all the products sold in Los Angeles in February, and include how many of each were sold.
+
+select Product, sum(Quantity) as total_sold, location from
+    (select * from FebSales
+    where length(orderid) = 6
+    and orderid <> 'Order ID')
+where location like '%Los Angeles%'
+group by product;
